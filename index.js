@@ -48,32 +48,29 @@ app.post('/users', function(req, res) {
   return res.json(req.body);
 })
 
+// PUT update user
+app.put('/users/:userId', function(req, res) {
+  const updatedUser = req.body;
+  users.forEach(user => {
+    if (user._id === parseInt(req.params.userId)) {
+      user.name = updatedUser.name ? updatedUser.name : user.name;
+      user.occupation = updatedUser.occupation ? updatedUser.occupation : user.occupation;
+      user.avatar = updatedUser.avatar ? updatedUser.avatar : user.avatar;
 
-// PUT
-// app.put('/users/1', function(req, res) {
-//   const userOne = users[0];
-//   userOne.occupation = 'Special Ops';
-//   return res.json(userOne);
-// })
-
-// app.put('/users/:userID', function(req, res) {
-//   req.body = users.filter(user => user._id === parseInt(req.params.userId));
-//   user = req.body;
-//   user.occupation = 'Special Ops';
-//   // users.find(user => user._id === parseInt(req.params.userId))
-//   return res.json(req.body);
-// })
+      return res.json(user);
+    }
+  })
+})
 
 // DELETE user by id
-// app.delete('/users/1', function(req, res) {
-//   users.shift()
-//   res.send('deleted');
-// })
-
-// app.delete('/users/:userId', function(req, res) {
-//   users.filter(user => user._id === parseInt(req.params.id))
-//   res.send('deleted');
-// })
+app.delete('/users/:userId', function(req, res) {
+  users.forEach(user => {
+    if (user._id === parseInt(req.params.userId)) {
+      user.isActive = false;
+    }
+  })
+  res.send('deleted')
+})
 
 /* END - create routes here */
 
